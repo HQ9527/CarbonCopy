@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""
-Author : Paranoid Ninja
-Email  : paranoidninja@protonmail.com
-Descr  : Spoofs SSL Certificates and Signs executables to evade Antivirus
-"""
+
 import argparse
 import shutil
 import ssl
 import subprocess
-import sys
 
+from sys import argv, platform
 from OpenSSL import crypto
 from pathlib import Path
 
@@ -97,16 +93,15 @@ def show_banner():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Impersonates the Certificate of a website.', formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('website', help='domain name of website to get certificate from')
-    parser.add_argument('port', help='port that target website is listening on', default=443)
-    parser.add_argument('build_executable', help='executable to sign')
-    parser.add_argument('signed_executable', help='output name of signed executable')
-    args = parser.parse_args()
+    print(""" +-+-+-+-+-+-+-+-+-+-+-+-+
+ |C|a|r|b|o|n|S|i|g|n|e|r|
+ +-+-+-+-+-+-+-+-+-+-+-+-+
 
-    show_banner()
-
-    CarbonCopy(args.hostname, args.port, args.build_executable, args.signed_executable)
+  CarbonSigner v1.0\n  Author: Paranoid Ninja\n""")
+    if len(argv) != 5:
+        print("[+] Descr: Impersonates the Certificate of a website\n[!] Usage: " + argv[0] + " <hostname> <port> <build-executable> <signed-executable>\n")
+    else:
+        CarbonCopy(argv[1], argv[2], argv[3], argv[4])
 
 
 if __name__ == "__main__":
